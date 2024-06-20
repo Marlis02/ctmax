@@ -1,0 +1,25 @@
+@import 'src/styles/mixins.scss';
+.con {
+  width: 90%;
+  margin: 0 auto;
+  @include flexbox(center, flex-start);
+  flex-direction: column;
+  h3 {
+    font-size: 30px;
+    margin: 50px 0;
+    font-weight: 400;
+  }
+  .orders__con {
+    @include centered;
+    gap: 20px;
+  }
+}
+
+.order {
+  width: 260px;
+  height: 120px;
+  border-radius: 20px;
+  @include centered;
+  gap: 20px;
+  box-shadow: rgba(6, 5, 50, 0.15) 0px 4px 22px -6px;
+}

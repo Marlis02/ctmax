@@ -1,0 +1,21 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-light: #fcfcfc;
+  --color-orange: #ff6801;
+  --color-light-grey: #f3f3f8;
+  --color-grey: #b6b6b6;
+  --color-red: #e30713;
+}
+
+body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

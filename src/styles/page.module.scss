@@ -1,0 +1,16 @@
+@import 'src/styles/mixins.scss';
+.main_con {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card_con {
+  margin-top: 60px;
+  width: 90%;
+  @include flexbox(space-between, center);
+  flex-wrap: wrap;
+  gap: 20px;
+}

@@ -1,0 +1,181 @@
+@import 'src/styles/mixins.scss';
+.con {
+  z-index: 2;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.64);
+  position: fixed;
+  top: 0;
+  left: 0;
+  @include flexbox(flex-end, center);
+}
+.cart_con {
+  height: 100%;
+  width: 500px;
+  background-color: var(--color-light-grey);
+  position: relative;
+  @include flexbox(flex-start, center);
+  flex-direction: column;
+  gap: 10px;
+  overflow: auto;
+  .cart__title {
+    font-size: 20px;
+    align-self: flex-start;
+    margin: 10px 0 0 10px;
+  }
+}
+
+.cart__close_btn {
+  cursor: pointer;
+  position: absolute;
+  top: 45%;
+  right: 530px;
+  background: none;
+  border: none;
+  z-index: 3;
+  color: var(--color-light);
+  transform-origin: center; // Ensures rotation happens around the center
+  transition: transform 0.4s ease-in-out; /* Анимация перехода */
+
+  &:hover {
+    transform: rotate(180deg);
+    transform-origin: 50% 50%;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+// .cart__footer {
+//   width: 100%;
+//   height: 80px;
+//   @include flexbox(space-around, center);
+//   position: sticky;
+//   bottom: 0;
+//   right: 0;
+//   background-color: var(--color-red);
+//   .cart__footer_btn {
+//     width: 270px;
+//     height: 50px;
+//     border-radius: 20px;
+//     border: none;
+//     font-size: 16px;
+//     line-height: 24px;
+//     color: var(--color-red);
+//     transition: all 0.4s;
+//     cursor: pointer;
+//     &:hover {
+//       background-color: rgba(177, 168, 168, 0.555);
+//     }
+//   }
+// }
+
+.cart__footer {
+  width: 100%; /* Убедитесь, что footer занимает всю ширину контейнера */
+  background-color: #fff; /* Цвет фона footer */
+  padding: 20px 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  gap: 10px;
+  @include flexbox(space-around, center);
+  flex-direction: column;
+  .cart__footer_desc {
+    width: 90%;
+
+    @include flexbox(space-between, center);
+    p {
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+    span {
+      font-size: 20px;
+    }
+  }
+  .cart__footer_btn {
+    width: 90%;
+    height: 50px;
+    border-radius: 25px;
+    border: none;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--color-light);
+    transition: all 0.4s;
+    cursor: pointer;
+    background-color: var(--color-red);
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.cartCard {
+  @include flexbox(space-between, center);
+  flex-direction: column;
+  width: 100%;
+  height: 160px;
+  background-color: var(--color-light);
+  // border: 1px solid black;
+  .cartCard__1 {
+    width: 90%;
+    height: 100px;
+    @include flexbox(space-between, center);
+    border-bottom: 1px solid var(--color-grey);
+  }
+  .cartCard__2 {
+    width: 90%;
+    height: 60px;
+
+    @include flexbox(space-between, center);
+    .cartCard__2_counter {
+      width: 100px;
+      height: 36px;
+      background-color: #f3f3f8;
+      gap: 15px;
+      @include centered;
+      border-radius: 18px;
+      cursor: pointer;
+    }
+  }
+}
+
+//scroll
+
+.cart_con::-webkit-scrollbar {
+  width: 12px; /* Ширина скроллбара */
+}
+
+.cart_con::-webkit-scrollbar-track {
+  background: var(--color-grey); /* Цвет трека (фона скроллбара) */
+  border-radius: 10px; /* Радиус скругления углов трека */
+}
+
+.cart_con::-webkit-scrollbar-thumb {
+  background: #888; /* Цвет ползунка скроллбара */
+  border-radius: 10px; /* Радиус скругления углов ползунка */
+}
+
+.cart_con::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Цвет ползунка скроллбара при наведении */
+}
+
+/* Стилизация скроллбара для Firefox */
+.cart_con {
+  scrollbar-width: thin; /* Толщина скроллбара */
+  scrollbar-color: #888 #f1f1f1; /* Цвета ползунка и трека */
+}
+
+// empty Cart
+
+.cart_empty {
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-light-grey);
+  @include centered;
+  flex-direction: column;
+  gap: 10px;
+  h3 {
+    color: var(--color-grey);
+  }
+}

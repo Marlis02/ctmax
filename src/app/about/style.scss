@@ -1,0 +1,23 @@
+@import 'src/styles/mixins.scss';
+
+#app {
+  height: 100%;
+}
+
+.swiper {
+  width: 90%;
+  height: 450px;
+  border-radius: 20px;
+}
+
+.swiper-slide {
+  width: 200px !important;
+  height: 250px;
+  background-color: red;
+  @include centered;
+  border-radius: 20px;
+  object-fit: cover;
+  img {
+    border-radius: 20px;
+  }
+}
