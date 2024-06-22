@@ -1,10 +1,18 @@
+'use client'
 import Link from 'next/link'
 import styles from '@/styles/components/header.module.scss'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 const Header = () => {
+  const pathname = usePathname()
+  const active =
+    pathname === '/check' ||
+    pathname === '/admin' ||
+    pathname === '/admin/dash' ||
+    pathname === '/admin/dash/create_product'
   return (
-    <div className={styles.header}>
+    <div className={active ? styles.header_none : styles.header}>
       <div className={styles.header__1}>
         <div className={styles.header__lang}>
           <Image src="/icons/language.svg" alt="logo" width={30} height={30} />

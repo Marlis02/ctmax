@@ -6,11 +6,3 @@
   align-items: center;
   flex-direction: column;
 }
-
-.card_con {
-  margin-top: 60px;
-  width: 90%;
-  @include flexbox(space-between, center);
-  flex-wrap: wrap;
-  gap: 20px;
-}

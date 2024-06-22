@@ -1,5 +1,5 @@
 import { useCartStore } from '@/store/cartStore'
-import styles from '@/styles/components/cart.module.scss'
+import styles from '@/styles/components/cart/cartCard.module.scss'
 import { ICartProduct } from '@/types/types'
 import { Minus, Plus, X } from 'lucide-react'
 import Image from 'next/image'
@@ -8,7 +8,7 @@ const CartCards = ({ id, title, img, desc, price, quantity }: ICartProduct) => {
   return (
     <div className={styles.cartCard}>
       <div className={styles.cartCard__1}>
-        <Image src={img} alt="cartImg" width={60} height={60} />
+        <Image src={img ? img : ''} alt="cartImg" width={60} height={60} />
         <p>{title}</p>
         <X size={20} onClick={() => removeItem(id)} />
       </div>

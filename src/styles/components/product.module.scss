@@ -1,4 +1,31 @@
 @import 'src/styles/mixins.scss';
+
+// Product List ==============================
+
+.product_list {
+  margin-top: 60px;
+  width: 90%;
+  @include flexbox(center, center);
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.category_section {
+  width: 100%;
+  @include flexbox(center, flex-start);
+  flex-direction: column;
+  gap: 20px;
+}
+
+.category_products {
+  width: 100%;
+  @include flexbox(space-between, center);
+  flex-wrap: wrap;
+  gap: 20px;
+}
+// Product Card ==============================
+
 .card {
   width: 300px;
   height: 450px;
@@ -6,6 +33,11 @@
   flex-direction: column;
   gap: 20px;
   //   background-color: var(--color-light);
+  border-radius: 20px;
+  border: 1px solid var(--color-light-grey);
+}
+
+.card_img {
   border-radius: 20px;
 }
 

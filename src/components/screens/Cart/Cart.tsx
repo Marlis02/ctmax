@@ -1,12 +1,16 @@
 'use client'
 import { useCartStore } from '@/store/cartStore'
-import styles from '@/styles/components/cart.module.scss'
+import styles from '@/styles/components/cart/cart.module.scss'
 import { X } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import CartCards from './CartCard'
 import Image from 'next/image'
+import Modal from '@/components/ui/Modal/Modal'
+import { useRouter } from 'next/navigation'
 
 const Cart = ({ setOpen }: { setOpen: any }) => {
+  const [modal, setModal] = useState(false)
+  const router = useRouter()
   const { items } = useCartStore()
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -40,7 +44,15 @@ const Cart = ({ setOpen }: { setOpen: any }) => {
                 <p>Сумма заказа</p>
                 <span>{totalCost} сом</span>
               </div>
-              <button className={styles.cart__footer_btn}>К оформлению</button>
+              <button
+                onClick={() => {
+                  router.push('/check')
+                  setOpen(false)
+                }}
+                className={styles.cart__footer_btn}
+              >
+                К оформлению
+              </button>
             </div>
           </>
         ) : (

@@ -8,7 +8,6 @@ type OpenStore = {
 
 export const useOpenCart = create<OpenStore>((set) => ({
   open: false,
-
   setOpen: () => set((state) => ({ open: !state.open })),
   items: [],
 }))
@@ -19,7 +18,6 @@ type Store = {
   removeItem: (itemId: number) => void
   clearCart: () => void
   getItems: () => ICartProduct[]
-
   plusQuantity: (itemId: number) => void
   minusQuantity: (itemId: number) => void
 }
@@ -28,10 +26,30 @@ export const useCartStore = create<Store>()(
     persist(
       (set, get) => ({
         items: [],
-        addItem: (newItem) =>
-          set((state) => ({
-            items: [...state.items, newItem],
-          })),
+        addItem: (newItem) => {
+          set((state) => {
+            const existingItem = state.items.find(
+              (item) => item.id === newItem.id,
+            )
+
+            if (existingItem) {
+              return {
+                items: state.items.map((item) =>
+                  item.id === newItem.id
+                    ? {
+                        ...item,
+                        quantity: item.quantity + 1,
+                        price: item.initialPrice * (item.quantity + 1),
+                      }
+                    : item,
+                ),
+              }
+            } else {
+              // Add new item to cart
+              return { items: [...state.items, newItem] }
+            }
+          })
+        },
         removeItem: (itemId) =>
           set((state) => ({
             items: state.items.filter((item) => item.id !== itemId),
@@ -64,7 +82,7 @@ export const useCartStore = create<Store>()(
           })),
       }),
       {
-        name: 'cart-storage', // имя ключа в localStorage
+        name: 'cart-storage',
       },
     ),
   ),
