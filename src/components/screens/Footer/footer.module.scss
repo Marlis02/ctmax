@@ -1,0 +1,9 @@
+@import 'src/styles/mixins.scss';
+.con {
+  width: 100%;
+  height: 200px;
+  @include flexbox(center, center);
+  flex-direction: column;
+  background-color: var(--color-dark);
+  color: var(--color-light);
+}

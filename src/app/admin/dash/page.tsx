@@ -3,7 +3,8 @@ import { useCategoryStore } from '@/store/categoriesStore'
 import useProductsStore from '@/store/productsStore'
 import React, { useEffect } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import styles from '@/styles/pages/dash.module.scss'
+import styles from './dash.module.scss'
+import axios from 'axios'
 
 type FromType = {
   title: string
@@ -33,34 +34,17 @@ const Main = () => {
     formData.append('composition', data.composition)
     formData.append('price', data.price.toString())
     formData.append('note', data.note)
-    formData.append('category', data.category.toString())
+    formData.append('category', data.category)
     if (data.image) {
       formData.append('image', data.image)
     }
+    const token = JSON.parse(localStorage.getItem('token') as string)
+    console.log(token.access)
+    // Retrieve the access token from local storage
 
-    console.log(data)
+    console.log(formData)
 
-    // try {
-    //   const response = await fetch('http://192.168.123.163:8000/products/', {
-    //     method: 'POST',
-    //     body: formData,
-    //   })
-
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok')
-    //   }
-
-    //   const result = await response.json()
-    //   console.log(result)
-    //   // Handle success (e.g., reset form, display success message)
-    //   reset()
-    // } catch (error) {
-    //   console.error('There was a problem with your fetch operation:', error)
-    //   // Handle error (e.g., display error message)
-    // }
-
-    addProducts(formData)
-    reset()
+    addProducts(formData, token.access)
   }
 
   useEffect(() => {
@@ -78,10 +62,11 @@ const Main = () => {
         <input
           type="text"
           {...register('title', { required: 'Обязательное поле' })}
+          placeholder="title"
         />
-        <input type="text" {...register('composition')} />
+        <input type="text" placeholder="Состав" {...register('composition')} />
         <input type="text" placeholder="price" {...register('price')} />
-        <input type="text" {...register('note')} />
+        <input type="text" {...register('note')} placeholder="Примечание" />
         {/* <input type="text" placeholder="category" {...register('category')} /> */}
         <select
           name="categoty"

@@ -1,17 +1,19 @@
 'use client'
 import { useCartStore } from '@/store/cartStore'
-import styles from '@/styles/components/cart/cart.module.scss'
+import styles from './cart.module.scss'
 import { X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import CartCards from './CartCard'
 import Image from 'next/image'
-import Modal from '@/components/ui/Modal/Modal'
+import Modal from '@/components/ui/Modals/Modal'
 import { useRouter } from 'next/navigation'
+import { useVerifCodeStore } from '@/store/verifCodeStore'
 
 const Cart = ({ setOpen }: { setOpen: any }) => {
   const [modal, setModal] = useState(false)
   const router = useRouter()
   const { items } = useCartStore()
+  const userPhone = useVerifCodeStore((state) => state.userPhone)
   useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => {

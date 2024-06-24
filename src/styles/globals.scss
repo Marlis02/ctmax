@@ -6,10 +6,14 @@
 
 :root {
   --color-light: #fcfcfc;
+  --color-dark: #181818;
   --color-orange: #ff6801;
   --color-light-grey: #f3f3f8;
-  --color-grey: #b6b6b6;
+  --color-grey: #999da6;
   --color-red: #e30713;
+}
+html {
+  font-size: 16px;
 }
 
 body {
@@ -18,4 +22,12 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+input {
+  font-size: inherit;
+}
+
+.Toastify__container {
+  top: 100px !important; /* Добавляет отступ снизу на 10 пикселей */
 }

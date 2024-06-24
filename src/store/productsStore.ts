@@ -6,7 +6,7 @@ import { devtools, persist } from 'zustand/middleware'
 interface IProductStore {
   products: IProduct[]
   getProducts: (title: string, categoryId: string) => void
-  addProducts: (products: any) => void
+  addProducts: (products: any, tokens: any) => void
   loading: boolean
   error: string | null
 }
@@ -27,9 +27,9 @@ const useProductsStore = create<IProductStore>()(
             set({ loading: false, error: 'Failed to fetch products' })
           }
         },
-        addProducts: async (formData: FormData) => {
+        addProducts: async (formData: FormData, tokens) => {
           try {
-            const res = await ProductService.postProducts(formData)
+            const res = await ProductService.postProducts(formData, tokens)
             if (res.status !== 200) {
               set({ error: 'Server error' })
               return

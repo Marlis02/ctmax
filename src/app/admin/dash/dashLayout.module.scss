@@ -1,0 +1,19 @@
+@import '/src/styles/mixins.scss';
+.con {
+  width: 100%;
+  @include flexbox(center, flex-start);
+
+  gap: 20px;
+  .nav {
+    width: 20%;
+    height: 100vh;
+    background-color: var(--color-grey);
+    @include flexbox(flex-start, center);
+    flex-direction: column;
+  }
+  .section {
+    width: 80%;
+    @include flexbox(flex-start, flex-start);
+    flex-direction: column;
+  }
+}

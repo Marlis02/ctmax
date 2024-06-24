@@ -1,10 +1,22 @@
 'use client'
 import Link from 'next/link'
-import styles from '@/styles/components/header.module.scss'
+import styles from './header.module.scss'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import Modal from '@/components/ui/Modals/Modal'
+import LoginModal from '@/components/ui/Modals/AuthModal/LoginModal'
+import CheckCode from '@/components/ui/Modals/AuthModal/CheckCode/CheckCode'
+import { useVerifCodeStore } from '@/store/verifCodeStore'
+import { CircleUserRound } from 'lucide-react'
 
 const Header = () => {
+  const [modal, setModal] = useState<boolean>(false)
+  const [activeModal, setActiveModal] = useState<string | null>(null)
+  const userPhone = useVerifCodeStore((state) => state.userPhone)
+
+  const router = useRouter()
+
   const pathname = usePathname()
   const active =
     pathname === '/check' ||
@@ -41,7 +53,19 @@ const Header = () => {
         </div>
         <div className={styles.header__block2}>
           <Image src="/icons/coin.svg" alt="logo" width={20} height={20} />
-          <button>Войти</button>
+          {userPhone ? (
+            <CircleUserRound onClick={() => router.push('/profile')} />
+          ) : (
+            <button onClick={() => setActiveModal('login')}>Войти</button>
+          )}
+          <Modal active={activeModal} setActive={setActiveModal}>
+            {activeModal === 'login' && (
+              <LoginModal setActive={setActiveModal} />
+            )}
+            {activeModal === 'checkCode' && (
+              <CheckCode setActive={setActiveModal} />
+            )}
+          </Modal>
         </div>
       </div>
     </div>

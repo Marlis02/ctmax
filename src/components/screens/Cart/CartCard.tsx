@@ -1,10 +1,11 @@
 import { useCartStore } from '@/store/cartStore'
-import styles from '@/styles/components/cart/cartCard.module.scss'
+import styles from './cartCard.module.scss'
 import { ICartProduct } from '@/types/types'
 import { Minus, Plus, X } from 'lucide-react'
 import Image from 'next/image'
 const CartCards = ({ id, title, img, desc, price, quantity }: ICartProduct) => {
   const { removeItem, plusQuantity, minusQuantity } = useCartStore()
+
   return (
     <div className={styles.cartCard}>
       <div className={styles.cartCard__1}>

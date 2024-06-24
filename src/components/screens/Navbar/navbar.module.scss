@@ -1,0 +1,93 @@
+@import 'src/styles/mixins.scss';
+
+.nav_none {
+  display: none;
+}
+
+.nav {
+  width: 100%;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  backdrop-filter: blur(40px);
+  position: -webkit-sticky; // For Safari
+  @include flexbox(space-between, center);
+  //   border: 1px solid black;
+  .nav__links {
+    width: 70%;
+    @include flexbox(flex-start, center);
+    gap: 20px;
+    margin-left: 5%;
+
+    .nav__link {
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.4s;
+      &:hover {
+        color: var(--color-red);
+      }
+    }
+  }
+  .nav__links_active {
+    margin-left: calc(100px + 20px); /* Account for logo width and gap */
+    animation: shiftLinks 0.4s ease-in-out forwards; /* Animation name and duration */
+    width: 70%;
+    @include flexbox(flex-start, center);
+    gap: 20px;
+    margin-left: 5%;
+
+    .nav__link {
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.4s;
+      &:hover {
+        color: var(--color-red);
+      }
+    }
+  }
+  .nav__cart_btn {
+    margin-right: 5%;
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    background-color: var(--color-red);
+    color: var(--color-light);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
+
+.nav__logo_active {
+  display: block;
+  opacity: 1; /* Ensure logo is visible */
+  // animation: slideInRight 0.4s ease-in-out forwards; /* Animation name and duration */
+  cursor: pointer;
+}
+
+.nav__logo_none {
+  display: none;
+  opacity: 0;
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(5%);
+  }
+  to {
+    transform: translateX(0); /* Move logo to its normal position */
+  }
+}
+
+/* Animation for link title shifting */
+@keyframes shiftLinks {
+  from {
+    margin-left: 0;
+  }
+  to {
+    margin-left: 75px; /* Account for logo width and gap */
+  }
+}

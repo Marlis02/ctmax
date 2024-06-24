@@ -8,6 +8,8 @@ export interface ICartProduct {
   quantity: number
   initialPrice: number
   category_title?: string
+  category?: number
+  composition?: string
 }
 
 export interface IProduct {
@@ -19,6 +21,12 @@ export interface IProduct {
   note: string
   category_title: string
   count?: number
+  category?: number
+}
+
+export interface User {
+  username: string
+  password: string
 }
 
 //orders=====================
@@ -41,9 +49,30 @@ export interface IUserOrders {
   product: IUserProducts
   quantity: number
 }
+// export interface  {
+//   user: IUser
+//   note: string
+//   status: string
+//   items: IUserOrders[]
+// }
+
 export interface ISendProduct {
-  user: IUser
+  user: {
+    name: string
+    phone: string
+    address: string
+  }
   note: string
   status: string
-  items: IUserOrders
+  items: {
+    product_id: number
+    product: {
+      title: string
+      composition: string
+      price: number
+      note: string
+      category: number
+    }
+    quantity: number
+  }[]
 }

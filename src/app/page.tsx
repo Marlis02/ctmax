@@ -1,11 +1,9 @@
 'use client'
-import styles from '@/styles/pages/main.module.scss'
+import styles from '@/styles/mainPage.module.scss'
 import PopularOrders from '@/components/screens/PopularOrders/PopularOrders'
-import { ICardData, cardData } from '@/data/data'
+
 import Slider from '@/components/ui/Slider/Slider'
-import { useEffect, useRef, useState } from 'react'
-import useProductsStore from '@/store/productsStore'
-import { groupProductsByCategory } from '@/utils/scroll'
+
 import ProductList from '@/components/screens/Product/ProductList'
 
 export default function Home() {
@@ -43,11 +41,6 @@ export default function Home() {
       <br />
       <br />
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <h1>Footer</h1>
     </main>
   )
 }

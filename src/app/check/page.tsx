@@ -10,26 +10,36 @@ import {
   RadioGroup,
   TextField,
 } from '@mui/material'
-import {
-  AlignVerticalJustifyStartIcon,
-  Backpack,
-  BackpackIcon,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 
 import { useState } from 'react'
 import { ICardData } from '@/data/data'
-import { ICartProduct } from '@/types/types'
+import { ICartProduct, ISendProduct } from '@/types/types'
 import { useRouter } from 'next/navigation'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { mapItems } from './halper'
+import { ProductService } from '@/api'
+import axios from 'axios'
+import { useOrdersStore } from '@/store/ordersStore'
 
 const Check = () => {
   const router = useRouter()
   const { items } = useCartStore()
+  const { addOrder } = useOrdersStore()
   const [pay, setPay] = useState('Начличными')
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPay((event.target as HTMLInputElement).value)
+  }
+
+  const { register, handleSubmit, setValue } = useForm<ISendProduct>()
+
+  const onSubmit: SubmitHandler<ISendProduct> = async (data: ISendProduct) => {
+    data.status = 'Новый'
+    data.items = mapItems(items)
+    localStorage.setItem('user-phone', JSON.stringify(data.user.phone))
+    console.log(data)
+    addOrder(data)
   }
 
   const totalCost = items.reduce((acc: any, item: any) => acc + item.price, 0)
@@ -45,24 +55,39 @@ const Check = () => {
           />
           <h2>Checkout</h2>
         </div>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.form_con1}>
             <p className={styles.form_con1_title}>Заказ на самовывоз</p>
             <div className={styles.form_con1_item}>
               <label className={styles.form_con1_label}>Имя</label>
-              <input className={styles.form_con1_inp} type="text" />
+              <input
+                className={styles.form_con1_inp}
+                type="text"
+                {...register('user.name')}
+              />
             </div>
             <div className={styles.form_con1_item}>
               <label className={styles.form_con1_label}>Номер телефона</label>
-              <input className={styles.form_con1_inp} type="text" />
+              <input
+                className={styles.form_con1_inp}
+                type="text"
+                {...register('user.phone')}
+              />
             </div>
             <div className={styles.form_con1_item}>
-              <label className={styles.form_con1_label}>Адрес пиццерии</label>
-              <input className={styles.form_con1_inp} type="text" />
+              <label className={styles.form_con1_label}>Адрес </label>
+              <input
+                className={styles.form_con1_inp}
+                type="text"
+                {...register('user.address')}
+              />
             </div>
             <div className={styles.form_con1_item}>
-              <label className={styles.form_con1_label}>Время</label>
-              <textarea className={styles.form_con1_textarea} />
+              <label className={styles.form_con1_label}>Примечание</label>
+              <textarea
+                className={styles.form_con1_textarea}
+                {...register('note')}
+              />
             </div>
           </div>
           <div className={styles.form_con2}>
@@ -130,24 +155,21 @@ const Check = () => {
               </RadioGroup>
             </FormControl>
           </div>
+
+          <div className={styles.btn_con}>
+            <button className={styles.button} onClick={() => router.push('/')}>
+              <ChevronLeft /> назад в корзину
+            </button>
+            <button type="submit" className={styles.button}>
+              Оформить закакз на 100сом <ChevronRight />
+            </button>
+          </div>
         </form>
         <br />
         <br />
         <br />
         <br />
-        <div className={styles.btn_con}>
-          <button className={styles.button} onClick={() => router.push('/')}>
-            <ChevronLeft /> назад в корзину
-          </button>
-          <button className={styles.button}>
-            Оформить закакз на 100сом <ChevronRight />
-          </button>
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+
         <div className={styles.cart_info}>
           <h3>Состав заказа</h3>
           <div className={styles.cart_orders}>

@@ -1,0 +1,35 @@
+.container {
+  width: 60%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+}
+
+.character {
+  width: 20px; /* Example: Set character width */
+  height: 50px; /* Example: Set character height */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border-radius: 8px;
+  font-size: 20px;
+}
+
+.character--inactive {
+  opacity: 0.5; /* Example: Make inactive characters slightly transparent */
+  background: none;
+}
+
+.character--selected {
+  /* Styles for the currently selected character */
+
+  background: none;
+}
+
+.character--filled {
+  background: none;
+}

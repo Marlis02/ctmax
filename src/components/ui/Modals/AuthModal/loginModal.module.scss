@@ -1,0 +1,52 @@
+@import 'src/styles/mixins.scss';
+.con {
+  width: 400px;
+  height: 390px;
+  @include flexbox(space-between, flex-start);
+  flex-direction: column;
+
+  padding: 30px;
+  .headers {
+    width: 100%;
+    height: 35%;
+    @include flexbox(space-between, flex-start);
+    flex-direction: column;
+  }
+  .form {
+    width: 100%;
+    height: 55%;
+    @include flexbox(space-between, center);
+    flex-direction: column;
+    .input_con {
+      width: 100%;
+      height: 44%;
+      @include flexbox(space-between, flex-start);
+      flex-direction: column;
+
+      .label {
+        color: var(--color-grey);
+        font-size: 14px;
+      }
+      .input {
+        width: 100%;
+        height: 55px;
+        border: 0.1px solid var(--color-grey);
+        border-radius: 8px;
+        padding: 20px;
+        &:focus-visible {
+          border: 1px solid grey;
+          outline: none;
+        }
+      }
+    }
+
+    .button {
+      width: 100%;
+      height: 50px;
+      background-color: var(--color-light-grey);
+      color: var(--color-grey);
+      border-radius: 25px;
+      cursor: pointer;
+    }
+  }
+}

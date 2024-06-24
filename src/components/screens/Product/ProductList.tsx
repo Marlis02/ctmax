@@ -1,6 +1,6 @@
 'use client'
 import React, { FC, memo, useEffect, useMemo, useState } from 'react'
-import styles from '@/styles/components/product.module.scss'
+import styles from './product.module.scss'
 import { cardData } from '@/data/data'
 import ProductCard from './ProductCard'
 import { IProduct } from '@/types/types'
@@ -16,7 +16,9 @@ const ProductList: FC = () => {
   const setCategoryRef = useScrollStore((state) => state.setCategoryRef)
 
   useEffect(() => {
-    getProducts(search, category)
+    if (products.length <= 0) {
+      getProducts(search, category)
+    }
   }, [category, search])
 
   const productsByCategory = useMemo(

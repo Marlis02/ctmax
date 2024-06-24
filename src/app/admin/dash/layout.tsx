@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
+import styles from './dashLayout.module.scss'
+
 const ProfileLayout = ({
   children,
 }: Readonly<{
@@ -12,13 +14,12 @@ const ProfileLayout = ({
   const pathname = usePathname()
 
   return (
-    <div>
-      <nav>
+    <div className={styles.con}>
+      <nav className={styles.nav}>
         <Link href="/admin/dash/create_product">Create Product</Link>
-        <br />
         <Link href="/admin/dash">Dashboard</Link>
       </nav>
-      <section>{children}</section>
+      <section className={styles.section}>{children}</section>
     </div>
   )
 }

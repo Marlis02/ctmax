@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import styles from '@/styles/components/popularOrders.module.scss'
+import styles from './popularOrders.module.scss'
 
 const PopularOrders = () => {
   return (
