@@ -1,33 +1,29 @@
 'use client'
 import { useCartStore } from '@/store/cartStore'
-import styles from './gg.module.scss'
-import {
-  Button,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  TextField,
-} from '@mui/material'
+import styles from './check.module.scss'
+import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 
-import { useState } from 'react'
-import { ICardData } from '@/data/data'
+import { useEffect, useState } from 'react'
 import { ICartProduct, ISendProduct } from '@/types/types'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { mapItems } from './halper'
-import { ProductService } from '@/api'
 import axios from 'axios'
 import { useOrdersStore } from '@/store/ordersStore'
+import { useVerifCodeStore } from '@/store/verifCodeStore'
+import { api } from '@/api/interceptors'
+import { useUserProductsStore } from '@/store/userProductsStore'
 
 const Check = () => {
   const router = useRouter()
   const { items } = useCartStore()
   const { addOrder } = useOrdersStore()
+  const userPhone = useVerifCodeStore((state) => state.userPhone)
   const [pay, setPay] = useState('Начличными')
+
+  const { products, getUserProducts } = useUserProductsStore()
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPay((event.target as HTMLInputElement).value)
   }
@@ -35,12 +31,23 @@ const Check = () => {
   const { register, handleSubmit, setValue } = useForm<ISendProduct>()
 
   const onSubmit: SubmitHandler<ISendProduct> = async (data: ISendProduct) => {
-    data.status = 'Новый'
+    data.status_order = 'Новый'
+    data.user = 2
     data.items = mapItems(items)
-    localStorage.setItem('user-phone', JSON.stringify(data.user.phone))
     console.log(data)
     addOrder(data)
   }
+
+  console.log(userPhone)
+  type Token = {
+    access: string
+    refresh: string
+  }
+
+  useEffect(() => {
+    getUserProducts()
+  }, [])
+  console.log(products)
 
   const totalCost = items.reduce((acc: any, item: any) => acc + item.price, 0)
   return (
@@ -63,23 +70,19 @@ const Check = () => {
               <input
                 className={styles.form_con1_inp}
                 type="text"
-                {...register('user.name')}
+                // {...register('user.')}
               />
             </div>
             <div className={styles.form_con1_item}>
               <label className={styles.form_con1_label}>Номер телефона</label>
-              <input
-                className={styles.form_con1_inp}
-                type="text"
-                {...register('user.phone')}
-              />
+              <div className={styles.form_con1_inp}>{userPhone}</div>
             </div>
             <div className={styles.form_con1_item}>
               <label className={styles.form_con1_label}>Адрес </label>
               <input
                 className={styles.form_con1_inp}
                 type="text"
-                {...register('user.address')}
+                {...register('address')}
               />
             </div>
             <div className={styles.form_con1_item}>

@@ -14,7 +14,6 @@ const Header = () => {
   const [modal, setModal] = useState<boolean>(false)
   const [activeModal, setActiveModal] = useState<string | null>(null)
   const userPhone = useVerifCodeStore((state) => state.userPhone)
-
   const router = useRouter()
 
   const pathname = usePathname()

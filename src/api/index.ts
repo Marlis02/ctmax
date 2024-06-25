@@ -51,6 +51,6 @@ export const ProductService = {
 
   //Admin auth
   loginAdmin: async (data: any) => {
-    return await axios.post(`${BASE_URL}/api/token/`, data)
+    return await axios.post(`${BASE_URL}/token/`, data)
   },
 }

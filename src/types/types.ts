@@ -57,13 +57,10 @@ export interface IUserOrders {
 // }
 
 export interface ISendProduct {
-  user: {
-    name: string
-    phone: string
-    address: string
-  }
+  user: number
+  address: string
   note: string
-  status: string
+  status_order: string
   items: {
     product_id: number
     product: {

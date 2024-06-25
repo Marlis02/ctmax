@@ -4,6 +4,7 @@ import { devtools } from 'zustand/middleware'
 
 type VerifCodeStore = {
   userPhone: string
+  user: any
   code: string
   getCode: (code: any) => void
   logout: (router: any) => void
@@ -13,6 +14,7 @@ export const useVerifCodeStore = create<VerifCodeStore>()(
   devtools((set) => ({
     userPhone: '',
     code: '',
+    user: [],
     getCode: async (code: string) => {
       try {
         const res = await axios.post(

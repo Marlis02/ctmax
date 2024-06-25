@@ -7,17 +7,18 @@ import { IProduct } from '@/types/types'
 import useProductsStore from '@/store/productsStore'
 import { groupByCategory } from './halper'
 import { useScrollStore } from '@/store/scrollStore'
+import { useUserProductsStore } from '@/store/userProductsStore'
 
 const ProductList: FC = () => {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('')
-  const products = useProductsStore((state) => state.products)
-  const getProducts = useProductsStore((state) => state.getProducts)
+  const products = useUserProductsStore((state) => state.products)
+  const getUserProducts = useUserProductsStore((state) => state.getUserProducts)
   const setCategoryRef = useScrollStore((state) => state.setCategoryRef)
 
   useEffect(() => {
     if (products.length <= 0) {
-      getProducts(search, category)
+      getUserProducts()
     }
   }, [category, search])
 

@@ -54,38 +54,38 @@ const Navbar = () => {
   return (
     <>
       <nav className={active ? styles.nav_none : styles.nav}>
-        <div
-          className={isSticky ? styles.nav__links_active : styles.nav__links}
-        >
-          <Image
-            src="/icons/main_logo.svg"
-            alt="main_logo"
-            className={
-              isSticky ? styles.nav__logo_active : styles.nav__logo_none
-            }
-            width={100}
-            height={50}
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          />
-          {categories.map((link: any) => (
-            <p
-              key={link.id}
-              className={styles.nav__link}
-              onClick={() => handleCategoryClick(link.title)}
-            >
-              {link.title}
-            </p>
-          ))}
+        <div className={styles.nav__con}>
+          <div
+            className={isSticky ? styles.nav__links_active : styles.nav__links}
+          >
+            <Image
+              src="/icons/main_logo.svg"
+              alt="main_logo"
+              className={isSticky ? styles.nav__logo_active : styles.nav__logo}
+              width={100}
+              height={50}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            />
+            {categories.map((link: any) => (
+              <p
+                key={link.id}
+                className={styles.nav__link}
+                onClick={() => handleCategoryClick(link.title)}
+              >
+                {link.title}
+              </p>
+            ))}
+          </div>
+          {items.length < 0 ? (
+            <button onClick={() => setOpen()} className={styles.nav__cart_btn}>
+              Корзина
+            </button>
+          ) : (
+            <button onClick={() => setOpen()} className={styles.nav__cart_btn}>
+              Корзина - {items.length}
+            </button>
+          )}
         </div>
-        {items.length < 0 ? (
-          <button onClick={() => setOpen()} className={styles.nav__cart_btn}>
-            Корзина
-          </button>
-        ) : (
-          <button onClick={() => setOpen()} className={styles.nav__cart_btn}>
-            Корзина - {items.length}
-          </button>
-        )}
       </nav>
       {open && <Cart setOpen={setOpen} />}
     </>
