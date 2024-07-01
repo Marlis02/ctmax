@@ -4,10 +4,11 @@ import { useCartStore, useOpenCart } from '@/store/cartStore'
 import styles from './navbar.module.scss'
 import Cart from '../Cart/Cart'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { act, useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { useCategoryStore } from '@/store/categoriesStore'
 import { useScrollStore } from '@/store/scrollStore'
+import { LocalMall } from '@mui/icons-material'
+import { useCategoryStore } from '@/store/categoriesStore'
 
 const Navbar = () => {
   const { open, setOpen } = useOpenCart()
@@ -15,24 +16,19 @@ const Navbar = () => {
   const { items } = useCartStore()
   const router = useRouter()
   //store
-  const categories = useCategoryStore((state) => state.categories)
-  const getCategories = useCategoryStore((state) => state.getCategories)
+  const navCategories = useCategoryStore((state) => state.navCategories)
+  const getNavCategories = useCategoryStore((state) => state.getNavCategories)
   const scrollToCategory = useScrollStore((state) => state.scrollToCategory)
-  const setCategoryRef = useScrollStore((state) => state.setCategoryRef)
-
   const [isSticky, setIsSticky] = useState(false)
 
   useEffect(() => {
-    if (categories.length <= 0) {
-      getCategories()
-    }
+    getNavCategories()
   }, [])
 
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 186)
     }
-
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -54,10 +50,8 @@ const Navbar = () => {
   return (
     <>
       <nav className={active ? styles.nav_none : styles.nav}>
-        <div className={styles.nav__con}>
-          <div
-            className={isSticky ? styles.nav__links_active : styles.nav__links}
-          >
+        <div className={styles.nav__block}>
+          <div className={styles.nav__links_con}>
             <Image
               src="/icons/main_logo.svg"
               alt="main_logo"
@@ -66,15 +60,26 @@ const Navbar = () => {
               height={50}
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             />
-            {categories.map((link: any) => (
-              <p
-                key={link.id}
-                className={styles.nav__link}
-                onClick={() => handleCategoryClick(link.title)}
-              >
-                {link.title}
-              </p>
-            ))}
+
+            <div
+              className={
+                isSticky ? styles.nav__links_active : styles.nav__links
+              }
+            >
+              {navCategories.map((link: any) => {
+                // console.log(link)
+
+                return (
+                  <p
+                    key={link.categoryId}
+                    className={styles.nav__link}
+                    onClick={() => handleCategoryClick(link.name)}
+                  >
+                    {link.name}
+                  </p>
+                )
+              })}
+            </div>
           </div>
           {items.length < 0 ? (
             <button onClick={() => setOpen()} className={styles.nav__cart_btn}>
@@ -87,7 +92,13 @@ const Navbar = () => {
           )}
         </div>
       </nav>
-      {open && <Cart setOpen={setOpen} />}
+
+      <button onClick={() => setOpen()} className={styles.nav__cart_btn_mobile}>
+        <LocalMall fontSize="large" className={styles.icon} />
+        <span className={styles.count}>{items.length}</span>
+      </button>
+
+      {open && <Cart open={open} setOpen={setOpen} />}
     </>
   )
 }

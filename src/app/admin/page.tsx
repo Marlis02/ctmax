@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation'
 const Admin = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const { login } = useAuthStore()
   const { push } = useRouter()
 
   console.log(username)

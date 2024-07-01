@@ -26,31 +26,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // const pathName = usePathname()
-  // const isAdmin = pathName === '/admin' || pathName === '/admin/dash'
-
-  // const toastOptions = {
-  //   position: 'top-right',
-  //   bottom: '20px',
-  //   duration: 3000,
-  //   theme: 'dark',
-  //   style: {
-  //     backgroundColor: '#36393F',
-  //     color: '#F0F0F0',
-  //     padding: '16px',
-  //     borderRadius: '4px',
-  //   },
-  // }
-
   return (
     <html lang="en">
       <body className={poppins.className}>
         <Header />
-        <Toaster position="top-center" reverseOrder={false} />
+        <Toaster
+          position="top-right"
+          containerStyle={{ top: '70px', right: '5%' }}
+          // reverseOrder={false}
+        />
         <Navbar />
         {children}
         <Footer />
-        {/* </Toaster> */}
       </body>
     </html>
   )

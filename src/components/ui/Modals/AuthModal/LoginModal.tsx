@@ -2,15 +2,31 @@
 import React, { useState } from 'react'
 import styles from './loginModal.module.scss'
 import axios from 'axios'
-import { useVerifCodeStore } from '@/store/verifCodeStore'
+import { useAuthStore } from '@/store/authStore'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { IUser } from '@/types/types'
 
-const LoginModal = ({ setActive }: any = {}) => {
+const LoginModal = ({ setModal }: any = {}) => {
   const [phoneNumber, setPhoneNumber] = useState<string>('996')
-  const getCode = useVerifCodeStore((state) => state.getCode)
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<IUser>()
 
-  const handleSubmit = (data: any) => {
-    getCode(data)
-    setActive('checkCode')
+  //-------------STORE------------
+  const userLogin = useAuthStore((state) => state.userLogin)
+
+  const onSubmit: SubmitHandler<IUser> = (data: any) => {
+    userLogin(
+      {
+        name: '',
+        surname: '',
+        phone: data.phone,
+        email: '',
+      },
+      setModal,
+    )
   }
 
   return (
@@ -22,23 +38,24 @@ const LoginModal = ({ setActive }: any = {}) => {
           об акциях
         </p>
       </div>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.input_con}>
           <span className={styles.label}>Номер телефона</span>
           <input
-            className={styles.input}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            value={phoneNumber}
+            id="phoneNumber"
             type="text"
+            placeholder="+996 999-999999"
+            className={styles.input}
+            {...register('phone', {
+              required: 'Phone number is required',
+            })}
           />
+          {errors.phone && <p>{errors.phone.message}</p>}
         </div>
-        <button
-          className={styles.button}
-          onClick={() => handleSubmit({ phone: phoneNumber })}
-        >
+        <button className={styles.button} type="submit">
           Выслать код
         </button>
-      </div>
+      </form>
     </div>
   )
 }

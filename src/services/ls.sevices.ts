@@ -12,14 +12,20 @@ export const removeLS = (key: string) => {
 
 // tokens
 export const getToken = () => {
-  return localStorage.getItem('tokens')
+  const tokens = localStorage.getItem('tokens')
+  if (tokens) {
+    const { token } = JSON.parse(tokens)
+    return token
+  } else {
+    console.error('No token available service')
+  }
 }
 
 export const getRefreshToken = () => {
   const tokens = localStorage.getItem('tokens')
   if (tokens) {
-    const { refreshToken } = JSON.parse(tokens)
-    return refreshToken
+    const { refresh } = JSON.parse(tokens)
+    return refresh
   } else {
     console.error('No refresh token available service')
   }

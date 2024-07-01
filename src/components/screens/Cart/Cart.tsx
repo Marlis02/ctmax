@@ -1,19 +1,19 @@
 'use client'
 import { useCartStore } from '@/store/cartStore'
 import styles from './cart.module.scss'
-import { X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Ref, useEffect, useRef, useState } from 'react'
 import CartCards from './CartCard'
 import Image from 'next/image'
 import Modal from '@/components/ui/Modals/Modal'
 import { useRouter } from 'next/navigation'
-import { useVerifCodeStore } from '@/store/verifCodeStore'
+import { useModalStore } from '@/store/modalStore'
+import { Close } from '@mui/icons-material'
 
-const Cart = ({ setOpen }: { setOpen: any }) => {
-  const [modal, setModal] = useState(false)
+const Cart = ({ open, setOpen }: any) => {
   const router = useRouter()
+  //store------------------------------
   const { items } = useCartStore()
-  const userPhone = useVerifCodeStore((state) => state.userPhone)
+  const { modal, setModal } = useModalStore()
   useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => {
@@ -22,15 +22,13 @@ const Cart = ({ setOpen }: { setOpen: any }) => {
   }, [])
 
   const totalCost = items.reduce((acc: any, item: any) => acc + item.price, 0)
-  console.log(items)
+  console.log(items, 'cartProducts')
+
   const cartProducts =
-    items.length > 0 ? (
-      items.map((item: any) => {
-        return <CartCards key={item.id} {...item} />
-      })
-    ) : (
-      <p>Корзина пуста</p>
-    )
+    items.length > 0 &&
+    items.map((item: any) => {
+      return <CartCards key={item.id} {...item} />
+    })
 
   return (
     <div className={styles.con}>
@@ -47,10 +45,7 @@ const Cart = ({ setOpen }: { setOpen: any }) => {
                 <span>{totalCost} сом</span>
               </div>
               <button
-                onClick={() => {
-                  router.push('/check')
-                  setOpen(false)
-                }}
+                onClick={() => router.push('/check')}
                 className={styles.cart__footer_btn}
               >
                 К оформлению
@@ -63,14 +58,14 @@ const Cart = ({ setOpen }: { setOpen: any }) => {
               src="/images/empty-cart.png"
               alt="emptyCart"
               width={300}
-              height={200}
+              height={100}
             />
             <h3>Ваша корзина пустая</h3>
           </div>
         )}
       </div>
       <button className={styles.cart__close_btn} onClick={() => setOpen()}>
-        <X size={60} />
+        <Close fontSize="large" />
       </button>
     </div>
   )

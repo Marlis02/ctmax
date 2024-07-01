@@ -1,7 +1,7 @@
 'use client'
 
-import { X } from 'lucide-react'
 import styles from './modal.module.scss'
+import { Close } from '@mui/icons-material'
 
 interface ModalProps {
   active: boolean
@@ -16,10 +16,10 @@ const Modal = ({ active, setActive, children }: any) => {
     >
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         {children}
-        <X
+        <Close
+          fontSize="large"
           className={styles.modalCloseBtn}
           onClick={() => setActive(null)}
-          size={40}
         />
       </div>
     </div>

@@ -1,24 +1,33 @@
 import { useCartStore } from '@/store/cartStore'
 import styles from './cartCard.module.scss'
 import { ICartProduct } from '@/types/types'
-import { Minus, Plus, X } from 'lucide-react'
 import Image from 'next/image'
-const CartCards = ({ id, title, img, desc, price, quantity }: ICartProduct) => {
+import CloseIcon from '@mui/icons-material/Close'
+import RemoveIcon from '@mui/icons-material/Remove'
+import { Add } from '@mui/icons-material'
+const CartCards = ({
+  id,
+  description,
+  image,
+  price,
+  quantity,
+  name,
+}: ICartProduct) => {
   const { removeItem, plusQuantity, minusQuantity } = useCartStore()
 
   return (
     <div className={styles.cartCard}>
       <div className={styles.cartCard__1}>
-        <Image src={img ? img : ''} alt="cartImg" width={60} height={60} />
-        <p>{title}</p>
-        <X size={20} onClick={() => removeItem(id)} />
+        <Image src={image ? image : ''} alt="cartImg" width={60} height={60} />
+        <p>{name}</p>
+        <CloseIcon fontSize="large" onClick={() => removeItem(id)} />
       </div>
       <div className={styles.cartCard__2}>
         <p>{price} сом</p>
         <div className={styles.cartCard__2_counter}>
-          <Minus size={20} onClick={() => minusQuantity(id)} />
+          <RemoveIcon fontSize="small" onClick={() => minusQuantity(id)} />
           {quantity}
-          <Plus size={20} onClick={() => plusQuantity(id)} />
+          <Add fontSize="small" onClick={() => plusQuantity(id)} />
         </div>
       </div>
     </div>

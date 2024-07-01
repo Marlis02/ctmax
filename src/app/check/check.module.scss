@@ -1,23 +1,26 @@
 @import '/src/styles/mixins.scss';
+
+.head {
+  width: 85%;
+  @include flexbox(space-between, center);
+  // border: 1px solid red;
+  margin: 20px 0 20px 0;
+}
 .con {
-  width: 90%;
-  .head {
-    padding: 0 40px;
-    @include flexbox(space-between, center);
-    margin: 0 0 50px 0;
-  }
+  width: 85%;
+  @include flexbox(space-between, flex-start);
+  margin: 20px 0 100px 0;
 }
 
 .form {
-  width: calc(60% + 80px);
+  width: 60%;
   @include flexbox(flex-start, space-between);
   flex-direction: column;
   gap: 50px;
-  //   border: 1px solid grey;
+  // border: 1px solid grey;
 }
 
 .form_con1 {
-  padding: 0 40px;
   width: 100%;
   @include flexbox(flex-start, flex-start);
   gap: 20px;
@@ -54,8 +57,8 @@
 }
 
 .form_con2 {
-  padding: 0 40px;
   display: flex;
+  justify-content: flex-start;
   flex-direction: column;
   gap: 20px;
   .form_con2_label {
@@ -63,6 +66,7 @@
   }
   .form_con2_item {
     width: 65%;
+    @include flexbox(center, center);
     .form_con2_inp {
       width: calc(70% - 15px);
       height: 40px;
@@ -70,7 +74,7 @@
       border-radius: 20px 0 0 20px;
       border: 1px solid var(--color-grey);
       &:active {
-        border: 1px solid red;
+        // border: 1px solid red;
       }
     }
     .form_con2_btn {
@@ -98,15 +102,6 @@
   }
 }
 
-.ahj2mt-MuiTypography-root {
-  margin: 0;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  font-size: 22px !important;
-  line-height: 1.5;
-  letter-spacing: 0.00938em;
-}
-
 .btn_con {
   width: 100%;
   @include flexbox(space-between, center);
@@ -130,59 +125,4 @@
       padding-left: 10px;
     }
   }
-}
-
-.cart_info {
-  position: absolute;
-  top: 130px; /* Adjust as needed */
-  right: 60px;
-  height: 600px;
-  width: 400px;
-  border-radius: 20px;
-  box-shadow: rgba(6, 5, 50, 0.1) 0px 6px 20px;
-  background-color: var(--color-light);
-  padding: 20px;
-  h3 {
-    margin: 10px 0 20px 0;
-  }
-}
-
-.cart_orders {
-  @include centered;
-  flex-direction: column;
-  gap: 20px;
-  overflow-y: auto;
-}
-
-.cart_order {
-  //   border: 1px solid black;
-  width: 100%;
-  height: 50px;
-  font-weight: 500;
-  @include flexbox(space-between, flex-start);
-  position: relative;
-  .cart_order_count {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    font-size: 14px;
-    font-weight: 400;
-  }
-}
-
-.cart_desc {
-  width: 100%;
-  @include flexbox(space-between, center);
-  height: 60px;
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
-  margin: 20px 0;
-  font-size: 14px;
-}
-.cart_total {
-  width: 100%;
-  @include flexbox(space-between, center);
-  height: 60px;
-  margin: 20px 0;
-  font-weight: 600;
 }

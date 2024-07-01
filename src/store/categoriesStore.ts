@@ -1,35 +1,28 @@
-import { ProductService } from '@/api'
+import { api } from '@/api/interceptors'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-type Category = {
-  id: number
-  title: string
-}
-
 type CategoryStore = {
-  categories: Category[]
-  getCategories: () => void
-  //   deleteCategory: (id: number) => void
-  //   editCategory: (id: number, title: string) => void
+  navCategories: any
+  getNavCategories: () => void
 }
 
 export const useCategoryStore = create<CategoryStore>()(
   devtools(
     persist(
       (set) => ({
-        categories: [],
-        getCategories: async () => {
+        navCategories: [],
+        getNavCategories: async () => {
           try {
-            const data = await ProductService.getCategories()
-            set({ categories: data })
+            const { data } = await api.get('/categories')
+            set({ navCategories: data })
           } catch (error) {
             console.log(error)
           }
         },
       }),
       {
-        name: 'category-storage', // имя ключа в localStorage
+        name: 'nav-categories', // имя ключа в localStorage
       },
     ),
   ),

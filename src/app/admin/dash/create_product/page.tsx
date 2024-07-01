@@ -1,6 +1,6 @@
 'use client'
 import { useCategoryStore } from '@/store/categoriesStore'
-import useProductsStore from '@/store/productsStore'
+import useProductsStore from '@/store/productsStore2'
 import React, { useEffect } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import styles from './createProduct.module.scss'

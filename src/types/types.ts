@@ -1,27 +1,33 @@
+import { emit } from 'process'
+
+// products
+export interface IProduct {
+  id: number
+  name: string
+  description: string
+  composition: string
+  price: number
+  category_id: number
+  image: string
+}
+export interface ICategory {
+  categoryId: number
+  name: string
+  products?: IProduct[]
+}
+
 //cart=====================
 export interface ICartProduct {
   id: number
-  title: string
-  img: string
-  desc: string
+  name: string
+  image: string
+  description: string
   price: number
   quantity: number
   initialPrice: number
-  category_title?: string
-  category?: number
   composition?: string
-}
-
-export interface IProduct {
-  id: number
-  title: string
-  composition?: string
-  price: number
-  image: string
-  note: string
-  category_title: string
-  count?: number
-  category?: number
+  category_name?: string
+  categoryId?: number
 }
 
 export interface User {
@@ -30,11 +36,6 @@ export interface User {
 }
 
 //orders=====================
-export interface IUser {
-  name: string
-  phone: string
-  address: string
-}
 
 export interface IUserProducts {
   title: string
@@ -56,20 +57,26 @@ export interface IUserOrders {
 //   items: IUserOrders[]
 // }
 
+// order
 export interface ISendProduct {
-  user: number
+  user_id: number
   address: string
   note: string
-  status_order: string
-  items: {
+  status: string
+  products: {
     product_id: number
-    product: {
-      title: string
-      composition: string
-      price: number
-      note: string
-      category: number
-    }
     quantity: number
   }[]
 }
+
+// user
+
+export interface IUser {
+  name?: string | null
+  surname?: string | null
+  phone?: string | null
+  email?: string | null
+  userId?: number | null
+}
+
+export interface IUserOrderList {}

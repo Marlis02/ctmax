@@ -2,24 +2,25 @@ import { useEffect, useState } from 'react'
 import styles from './checkCode.module.scss'
 import VerificationInput from 'react-verification-input'
 import './input.css'
-import toast from 'react-hot-toast'
-import { useVerifCodeStore } from '@/store/verifCodeStore'
+import { useAuthStore } from '@/store/authStore'
+import { CircularProgress } from '@mui/material'
+import { IUser } from '@/types/types'
 
-const CheckCode = ({ active, setActive }: any) => {
+const CheckCode = ({ setModal }: any) => {
   const [checkCode, setCheckCode] = useState('')
-  const code = useVerifCodeStore((state) => state.code)
+
+  //STORE---------------------------------------------------
+  const userCheckCode = useAuthStore((state) => state.userCheckCode)
+  const user: IUser = useAuthStore((state) => state.user)
+  const loading = useAuthStore((state) => state.laoding)
+  //--------------------------------------------------------
   const handleChange = (value: any) => {
     setCheckCode(value)
   }
 
   useEffect(() => {
     if (checkCode.length === 4) {
-      if (checkCode === code) {
-        toast.success('Код верный')
-        setActive(null)
-      } else {
-        toast.error('Код неверный')
-      }
+      userCheckCode({ phone: user.phone, code: checkCode }, setModal)
     }
   }, [handleChange])
 
@@ -28,12 +29,15 @@ const CheckCode = ({ active, setActive }: any) => {
       <div className={styles.headers}>
         <h1 className={styles.title}>Вход на сайт</h1>
         <p className={styles.note}>
-          Код отправили сообщением на <br />
-          +996 996 706 525{' '}
-          <span onClick={() => setActive('login')} className={styles.change}>
+          Код отправили сообщением на :
+          <br />
+          {user.phone}
+          <span onClick={() => setModal('login')} className={styles.change}>
+            {' '}
             Изменить
           </span>
         </p>
+        {loading && <CircularProgress />}
       </div>
       <div className={styles.form}>
         <div className={styles.input_con}>

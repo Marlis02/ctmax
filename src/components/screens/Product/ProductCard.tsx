@@ -1,23 +1,42 @@
 import { useCartStore } from '@/store/cartStore'
 import styles from './product.module.scss'
-import { IProduct } from '@/types/types'
+import { ICartProduct, IProduct } from '@/types/types'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+
+// export interface ICartProduct {
+//   id: number
+//   name: string
+//   image: string
+//   description: string
+//   price: number
+//   category_name?: string
+//   categoryId: number
+//   composition?: string
+//   quantity: number
+//   initialPrice: number
+// }
 
 const ProductCard = ({
   id,
-  category_title,
   image,
-  note,
   price,
-  title,
+  description,
   composition,
-  count,
-  category,
+  category_id,
+  name,
 }: IProduct) => {
-  const { items, addItem } = useCartStore()
-  const [defaultImage, setDefaultState] = useState('')
+  const addItem = useCartStore((state) => state.addItem)
+  const cartProduct: ICartProduct = {
+    id,
+    name,
+    image,
+    description,
+    price,
+    quantity: 1,
+    initialPrice: price,
+    composition: composition,
+  }
 
   return (
     <div className={styles.card}>
@@ -29,32 +48,24 @@ const ProductCard = ({
         onClick={() => alert(id)}
         className={styles.card_img}
       />
-      <p className={styles.card_title}>{title}</p>
-      <p className={styles.card_desc}>{note}</p>
+      <p className={styles.card_title}>{name}</p>
+      <p className={styles.card_desc}>
+        Охотничьи колбаски, маринованные огурчики, красный лук, томаты,
+        горчичный соус, моцарелла, томатный соус {description}
+      </p>
       <div className={styles.card_footer}>
         <span className={styles.card_price}>{price} сом</span>
         <button
           className={styles.card_btn}
           onClick={() => {
-            addItem({
-              id,
-              img: image ? image : '/images/pizz.png',
-              price,
-              title,
-              desc: note,
-              quantity: 1,
-              initialPrice: price,
-              category_title,
-              category,
-              composition,
-            })
-            toast(`1шт ${title} добавлено в корзину `, {
+            addItem(cartProduct)
+            toast(`Добавлено в корзину : \n  1шт ${name} `, {
               style: {
-                width: '300px',
-                borderRadius: '4px',
+                borderRadius: '12px',
                 background: '#333',
                 color: '#fff',
-                padding: '10px',
+                padding: '15px',
+                fontSize: '14px',
               },
             })
           }}

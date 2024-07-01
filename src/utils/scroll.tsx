@@ -13,14 +13,3 @@
 //     footerRef?.current?.scrollIntoView({ behavior: 'smooth' })
 //   }
 // }
-
-export const groupProductsByCategory = (products: any) => {
-  return products.reduce((acc: any, product: any) => {
-    const { category } = product
-    if (!acc[category]) {
-      acc[category] = []
-    }
-    acc[category].push(product)
-    return acc
-  }, {})
-}

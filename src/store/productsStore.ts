@@ -1,55 +1,40 @@
-import { ProductService } from '@/api'
-import { IProduct } from '@/types/types'
+import { api } from '@/api/interceptors'
+import { Category } from '@mui/icons-material'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-interface IProductStore {
-  products: IProduct[]
-  getProducts: (title: string, categoryId: string) => void
-  addProducts: (products: any, tokens: any) => void
+interface IProductsStore {
+  products: any
+  getProducts: () => void
   loading: boolean
   error: string | null
 }
-const useProductsStore = create<IProductStore>()(
+
+const useProductStore = create<IProductsStore>()(
   devtools(
     persist(
       (set) => ({
-        products: [],
+        categories: [],
+        products: null,
         loading: false,
         error: null,
-        getProducts: async (title: string, categoryId: string) => {
+        getProducts: async () => {
+          console.log('getProducts вызван')
+          set({ loading: true, error: null })
           try {
-            set({ loading: true })
-            const data = await ProductService.getProducts(title, categoryId)
+            const { data } = await api.get('/products')
+            // console.log(data)
             set({ products: data, loading: false })
           } catch (error) {
-            console.error('Error fetching products:', error)
-            set({ loading: false, error: 'Failed to fetch products' })
-          }
-        },
-        addProducts: async (formData: FormData, tokens) => {
-          try {
-            const res = await ProductService.postProducts(formData, tokens)
-            if (res.status !== 200) {
-              set({ error: 'Server error' })
-              return
-            }
-            // Assuming the response data is the new product
-            set((state) => ({
-              products: [...state.products, res.data],
-              error: null,
-            }))
-          } catch (error) {
-            console.log(error)
-            set({ error: 'Failed to post product' })
+            set({ error: 'Failed to fetch products', loading: false })
           }
         },
       }),
       {
-        name: 'products-storage', // имя ключа в localStorage
+        name: 'products',
       },
     ),
   ),
 )
 
-export default useProductsStore
+export default useProductStore
